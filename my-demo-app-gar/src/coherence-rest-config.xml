@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<rest xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.oracle.com/coherence/coherence-rest-config"
+	xsi:schemaLocation="http://xmlns.oracle.com/coherence/coherence-rest-config
+      coherence-rest-config.xsd">
+	<resources>
+		<resource>
+			<cache-name>Person</cache-name>
+			<key-class>java.lang.Integer</key-class>
+			<value-class>model.Person</value-class>
+		</resource>
+	
+	</resources>
+	
+	<processors>    
+        
+        <processor>
+            <name>myprocessor</name>
+            <class-name>utils.CustomAgeDoubler</class-name>
+        </processor>
+        
+        <processor>
+            <name>myupdater</name>            
+            <class-name>utils.CustomNameUpdater</class-name>
+        </processor>
+        
+    </processors>
+</rest>

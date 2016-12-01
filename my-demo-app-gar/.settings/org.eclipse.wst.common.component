@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="my-demo-app-gar">
+        <wb-resource deploy-path="/" source-path="/src"/>
+        <wb-resource deploy-path="/lib" source-path="/lib"/>
+        <dependent-module archiveName="my-demo-app-jpa.jar" deploy-path="/lib" handle="module:/resource/my-demo-app-jpa/my-demo-app-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
