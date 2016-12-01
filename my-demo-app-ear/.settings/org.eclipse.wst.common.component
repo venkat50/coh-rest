@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="my-demo-app-ear">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="my-demo-app-war.war" deploy-path="/" handle="module:/resource/my-demo-app-war/my-demo-app-war">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="my-demo-app-gar.gar" deploy-path="/" handle="module:/resource/my-demo-app-gar/my-demo-app-gar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="my-demo-app-jpa.jar" deploy-path="/" handle="module:/resource/my-demo-app-jpa/my-demo-app-jpa">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>
