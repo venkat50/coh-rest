@@ -1,0 +1,94 @@
+#!/bin/sh
+
+# PROJDIR refers to the directory where you extracted the zip file
+# JAVA_HOME set to JDK8 INSTALL
+# MW_HOME SHOULD BE SET FOR RUNNING setWLSEnv.cmd from your WLS 12c (12.1.3) install (~wlserver/bin/setWLSEnv.cmd)
+
+PROJDIR=`pwd`
+
+export PROJDIR
+
+JAVA_HOME=/usr/java/latest
+export JAVA_HOME
+
+MW_HOME=/u01/wins/wls12cR2
+
+export MW_HOME
+
+WL_HOME=$MW_HOME/wlserver
+export WL_HOME
+
+if [ ! -f $WL_HOME/server/bin/setWLSEnv.sh ]; then
+   echo "check MW_HOME=$MW_HOME"
+   exit 1
+fi
+
+
+TESTAPP=my-demo-app-ear
+
+if [ ! -f ${TESTAPP}.ear ]; then
+
+  # PREPARE EAR FILE
+
+  cp ${TESTAPP}.org ${TESTAPP}.ear
+
+  $JAVA_HOME/bin/jar xvf ${TESTAPP}.ear my-demo-app-gar.gar
+
+  $JAVA_HOME/bin/jar xvf my-demo-app-gar.gar lib
+
+  mv lib/my-demo-app-jpa.jar .
+
+  cp $MW_HOME/coherence/lib/coherence-rest.jar lib
+
+  $JAVA_HOME/bin/jar uvf my-demo-app-gar.gar lib
+
+  $JAVA_HOME/bin/jar uvf ${TESTAPP}.ear my-demo-app-gar.gar my-demo-app-jpa.jar
+
+  # CLEANUP
+
+  rm -rf ${PROJDIR}/lib
+  rm my-demo-app-gar.gar my-demo-app-jpa.jar
+
+fi
+
+DOMAIN_HOME=$PROJDIR/${1}dom
+
+export DOMAIN_HOME
+
+echo "$DOMAIN_HOME"
+echo "$PROJDIR"
+
+
+JAVA_OPTIONS="-XX:+UnlockCommercialFeatures -XX:+FlightRecorder"
+
+USER_MEM_ARGS="-Xms512m -Xmx512m"
+
+if [ ! -d $DOMAIN_HOME ]; then
+
+  $MW_HOME/oracle_common/common/bin/wlst.sh $PROJDIR/basicMCSDomain.py $1 $2
+
+fi
+
+
+# COPY DERBY JARs to DOMAIN_HOME/lib
+
+if [ ! -f $DOMAIN_HOME/lib/derby.jar ]; then
+
+	cp $JAVA_HOME/db/lib/derby.jar $DOMAIN_HOME/lib
+fi
+
+if [ ! -f $DOMAIN_HOME/autodeploy/${TESTAPP}.ear ]; then
+        cp $PROJDIR/${TESTAPP}.ear $DOMAIN_HOME/autodeploy
+fi
+
+
+# Create and Load Sample data
+
+if [ ! -d $DOMAIN_HOME/sample ]; then
+    $JAVA_HOME/bin/java -Dij.database="jdbc:derby:${1}dom/sample;create=true"  -jar $JAVA_HOME/db/lib/derbyrun.jar ij sample.sql
+fi
+
+
+echo "DOMAIN HOME=$DOMAIN_HOME"
+echo "Starting Server `date`"
+$DOMAIN_HOME/bin/startWebLogic.sh noderby 

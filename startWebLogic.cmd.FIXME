@@ -1,0 +1,96 @@
+@ECHO OFF
+
+
+SETLOCAL
+
+@REM
+
+@REM PROJDIR refers to the directory where you extracted the zip file
+set PROJDIR=%CD%
+@REM set JAVA_HOME to your JDK8 INSTALL
+set JAVA_HOME=C:\Progra~1\Java\jdk18~1.0_1
+@REM set MW_HOME to your WebLogic installation
+set MW_HOME=D:\Oracle\Middleware
+
+set WL_HOME=%MW_HOME%\wlserver
+
+
+if NOT exist "%WL_HOME%\server" (
+	echo CHECK MW_HOME=%MW_HOME%. Cannot find %WL_HOME%\server
+	GOTO :EOF
+)
+
+call %WL_HOME%\server\bin\setWLSEnv.cmd
+
+set TESTAPP=my-demo-app-ear
+
+REM PREPARE EAR FILE
+
+if NOT exist %TESTAPP%.ear (
+
+   copy %TESTAPP%.org %TESTAPP%.ear
+
+   %JAVA_HOME%\bin\jar xvf %TESTAPP%.ear my-demo-app-gar.gar
+
+   %JAVA_HOME%\bin\jar xvf my-demo-app-gar.gar lib
+
+   move lib\my-demo-app-jpa.jar .
+   copy %MW_HOME%\coherence\lib\coherence-rest.jar lib
+
+   %JAVA_HOME%\bin\jar uvf my-demo-app-gar.gar lib
+
+   %JAVA_HOME%\bin\jar uvf %TESTAPP%.ear my-demo-app-gar.gar my-demo-app-jpa.jar
+
+   @REM CLEANUP
+
+   @rmdir /s/q lib
+   @del my-demo-app-gar.gar my-demo-app-jpa.jar
+)
+
+
+
+set DOMAIN_HOME=%PROJDIR%\%1dom
+
+
+set JAVA_OPTIONS=-XX:+UnlockCommercialFeatures -XX:+FlightRecorder
+
+set USER_MEM_ARGS=-Xms512m -Xmx512m
+
+echo DOMAIN HOME=%DOMAIN_HOME%
+
+if NOT exist %DOMAIN_HOME% (
+  call %MW_HOME%\oracle_common\common\bin\wlst.cmd  %PROJDIR%\basicMCSDomain.py %1 %2 
+)
+
+
+
+
+@REM COPY DERBY JARs to DOMAIN_HOME\lib
+
+
+if NOT exist %DOMAIN_HOME%\lib\derby.jar (
+
+	copy %JAVA_HOME%\db\lib\derby.jar %DOMAIN_HOME%\lib
+)
+
+if NOT exist %DOMAIN_HOME%\autodeploy\%TESTAPP% (
+ 	del /q %DOMAIN_HOME%\autodeploy\*.ear
+        copy %PROJDIR%\%TESTAPP%.ear %DOMAIN_HOME%\autodeploy     
+)
+
+@REM Create and Load Sample data
+
+if NOT exist %DOMAIN_HOME%\sample (
+    %JAVA_HOME%\bin\java -Dij.database="jdbc:derby:%1dom/sample;create=true" -jar %JAVA_HOME%\db\lib\derbyrun.jar  ij sample.sql
+
+)
+
+
+
+echo Starting Server %DATE%_%TIME%
+call "%DOMAIN_HOME%\bin\startWebLogic.cmd" noderby 
+
+:EOF
+
+
+ENDLOCAL
