@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+
+<cache-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.oracle.com/coherence/coherence-cache-config"
+	xsi:schemaLocation="http://xmlns.oracle.com/coherence/coherence-cache-config http://xmlns.oracle.com/coherence/coherence-cache-config/1.3/coherence-cache-config.xsd">
+
+
+	<caching-scheme-mapping>
+		<cache-mapping>
+			<cache-name>Person</cache-name>
+		
+			<scheme-name>ExamplesFederatedPofScheme</scheme-name>
+							
+			<interceptors>
+				<interceptor>
+					<name>MyInterceptor</name>
+					<instance>
+						<class-name>
+							utils.MyInterceptor
+						</class-name>
+					</instance>
+				</interceptor>
+			</interceptors>
+		</cache-mapping>
+	</caching-scheme-mapping>
+
+	<caching-schemes>
+	
+
+		<federated-scheme>
+			<scheme-name>ExamplesFederatedPofScheme</scheme-name>
+			<service-name>FederatedPartitionedPofCache</service-name>
+			<backing-map-scheme>
+				<local-scheme>
+					<unit-calculator>binary</unit-calculator>
+				</local-scheme>
+			</backing-map-scheme>
+			<autostart>true</autostart>
+		</federated-scheme>
+
+	</caching-schemes>
+</cache-config>

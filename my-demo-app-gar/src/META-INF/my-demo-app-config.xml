@@ -1,13 +1,15 @@
 <?xml version="1.0"?>
+
 <cache-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns="http://xmlns.oracle.com/coherence/coherence-cache-config"
-	xsi:schemaLocation="http://xmlns.oracle.com/coherence/coherence-cache-config http://xmlns.oracle.com/coherence/coherence-cache-config/1.3/coherence-cache-config.xsd">
+	xsi:schemaLocation="http://xmlns.oracle.com/coherence/coherence-cache-config http://xmlns.oracle.com/coherence/coherence-cache-config/1.4/coherence-cache-config.xsd">
 
 
 	<caching-scheme-mapping>
 		<cache-mapping>
 			<cache-name>Person</cache-name>
-			<scheme-name>distributed-jpa</scheme-name>
+			<scheme-name>federated</scheme-name>
+
 			<interceptors>
 				<interceptor>
 					<name>MyInterceptor</name>
@@ -19,21 +21,21 @@
 				</interceptor>
 			</interceptors>
 		</cache-mapping>
-		<cache-mapping>
-			<cache-name>Customer</cache-name>
-			<scheme-name>distributed-jpa</scheme-name>
-		</cache-mapping>
 	</caching-scheme-mapping>
 
 	<caching-schemes>
-		<distributed-scheme>
-			<scheme-name>distributed-jpa</scheme-name>
-			<service-name>EclipseLinkJPA</service-name>
+
+		<federated-scheme>
+			<scheme-name>federated</scheme-name>
+			<service-name>FederatedPartitionedPofCache</service-name>
 			<backing-map-scheme>
 				<read-write-backing-map-scheme>
 					<!-- Define the cache scheme -->
 					<internal-cache-scheme>
-						<local-scheme />
+						<local-scheme>
+							<high-units>0</high-units>
+							<unit-calculator>BINARY</unit-calculator>
+						</local-scheme>
 					</internal-cache-scheme>
 					<cachestore-scheme>
 						<class-scheme>
@@ -52,11 +54,24 @@
 								</init-param>
 							</init-params>
 						</class-scheme>
+						<federated-loading>true</federated-loading>
 					</cachestore-scheme>
 					<write-delay>5s</write-delay>
 				</read-write-backing-map-scheme>
 			</backing-map-scheme>
 			<autostart>true</autostart>
-		</distributed-scheme>
+		</federated-scheme>
+
+		<federated-scheme>
+			<scheme-name>ExamplesFederatedPofScheme</scheme-name>
+			<service-name>FederatedPofCache</service-name>
+			<backing-map-scheme>
+				<local-scheme>
+					<unit-calculator>binary</unit-calculator>
+				</local-scheme>
+			</backing-map-scheme>
+			<autostart>true</autostart>
+		</federated-scheme>
+
 	</caching-schemes>
 </cache-config>

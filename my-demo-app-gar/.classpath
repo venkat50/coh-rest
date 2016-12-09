@@ -14,12 +14,17 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="con" path="oracle.eclipse.tools.coherence.gar.libs.container"/>
 	<classpathentry kind="con" path="oracle.eclipse.tools.weblogic.lib.application/my-demo-app-ear"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Coherence"/>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Coherence">
+		<attributes>
+			<attribute name="owner.project.facets" value="oracle.coherence;#system#"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/Coherence-REST">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="lib"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/my-demo-app-jpa"/>
+	<classpathentry kind="lib" path="D:/Oracle/Middleware/oracle_common/modules/oracle.toplink/toplink-grid.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
