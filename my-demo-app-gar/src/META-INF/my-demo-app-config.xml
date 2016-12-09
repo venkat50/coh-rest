@@ -62,16 +62,6 @@
 			<autostart>true</autostart>
 		</federated-scheme>
 
-		<federated-scheme>
-			<scheme-name>ExamplesFederatedPofScheme</scheme-name>
-			<service-name>FederatedPofCache</service-name>
-			<backing-map-scheme>
-				<local-scheme>
-					<unit-calculator>binary</unit-calculator>
-				</local-scheme>
-			</backing-map-scheme>
-			<autostart>true</autostart>
-		</federated-scheme>
-
+	
 	</caching-schemes>
 </cache-config>
