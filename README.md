@@ -20,8 +20,8 @@ Using the provided scripts, two weblogic domains are created and configured for 
 2. (Optional) Rename startWebLogic.sh.FIXME to startWebLogic.sh (for Linux)
   * Update startWebLogic.cmd and startWebLogic.sh to match your directory/environment (MW_HOME and JAVA_HOME)
 3. (Optional)  Update basicMCSDomain.py when using Linux Guest in VirtualBox.
-  *   Create and start Domain1 - startWebLogic.sh|cmd site1 7101
-  *  Create and start Domain2 - startWebLogic.sh|cmd site2 7201
+4. Create and start Domain1 - startWebLogic.sh|cmd site1 7101
+5. Create and start Domain2 - startWebLogic.sh|cmd site2 7201
 
 ## RUN
 
