@@ -26,26 +26,27 @@ Using the provided scripts, two weblogic domains are created and configured for 
 ## RUN
 
 1. Use browser to access http://localhost:7201/my-demo-app-war/rest/Person
-The response will be an empty <collection>
+   > The response will be an empty 
+   \<collection\>
 
 2. Use browser to access http://localhost:7101/my-demo-app-war/rest/Person/1.json
-You should see the following response
-
-{"age":10,"id":1,"name":"Foo10"}
+  > You should see the following response
+  >    {"age":10,"id":1,"name":"Foo10"}
 
 3. Use browser to access http://localhost:7201/my-demo-app-war/rest/Person/3.json
-You should see the following response
-{"age":30,"id":3,"name":"Foo30"}
+   > You should see the following response
+   > \{"age":30,"id":3,"name":"Foo30"\}
 
 4. Access http://localhost:7101/my-demo-app-war/rest/Person to see the following response
-<collection>
-<age>10</age>
-<id>1</id>
-<name>Foo10</name>
-<age>30</age>
-<id>3</id>
-<name>Foo30</name>
-</collection>
+
+ > \<collection\>
+ > \<age\>10\</age\>
+ > \<id\>1\</id\>
+ > \<name\>Foo10\</name\>
+ > \<age\>30\</age\>
+ > \<id\>3\</id\>
+ > \<name\>Foo30\</name\>
+ > \</collection\>
 
 Note: The REST URL alternates between two domains/WebLogic Server (port 7101 and 7201) to demonstrate active-active replication.
 
