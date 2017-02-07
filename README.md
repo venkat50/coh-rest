@@ -1,7 +1,7 @@
 # coh-rest
 Simple Coherence REST application (EAR = GAR + JPA + WAR)
 
-Overview
+## Overview
 
 This is a self-contained application to demonstrate Coherence Federation using GAR deployment on WebLogic Server.
 
@@ -9,20 +9,21 @@ Using the provided scripts, two weblogic domains are created and configured for 
 
 
 
-Installation Requirements:
+## Installation Requirements:
 1. Install JDK 8
 2. Install WLS 12c (12.2.1.2)
 
 
-Steps:
-1a. Rename startWebLogic.cmd.FIXME to startWebLogic.cmd (for windows)
-1b. Rename startWebLogic.sh.FIXME to startWebLogic.sh (for Linux)
-2a. Update startWebLogic.cmd and startWebLogic.sh to match your directory/environment (MW_HOME and JAVA_HOME)
-2b. (Optional)  Update basicMCSDomain.py when using Linux Guest in VirtualBox.
-3a.   Create and start Domain1 - startWebLogic.sh|cmd site1 7101
-3b.   Create and start Domain2 - startWebLogic.sh|cmd site2 7201
+## Steps:
+1. Rename startWebLogic.cmd.FIXME to startWebLogic.cmd (for windows)
+  * Modify startWebLogic.cmd to match your directory and environment (MW_HOME and JAVA_HOME)
+2. (Optional) Rename startWebLogic.sh.FIXME to startWebLogic.sh (for Linux)
+  * Update startWebLogic.cmd and startWebLogic.sh to match your directory/environment (MW_HOME and JAVA_HOME)
+3. (Optional)  Update basicMCSDomain.py when using Linux Guest in VirtualBox.
+  *   Create and start Domain1 - startWebLogic.sh|cmd site1 7101
+  *  Create and start Domain2 - startWebLogic.sh|cmd site2 7201
 
-RUN
+## RUN
 
 1. Use browser to access http://localhost:7201/my-demo-app-war/rest/Person
 The response will be an empty <collection>
