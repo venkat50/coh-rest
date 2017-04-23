@@ -73,7 +73,7 @@ if NOT exist %DOMAIN_HOME%\lib\derby.jar (
 	copy %JAVA_HOME%\db\lib\derby.jar %DOMAIN_HOME%\lib
 )
 
-if NOT exist %DOMAIN_HOME%\autodeploy\%TESTAPP% (
+if NOT exist %DOMAIN_HOME%\autodeploy\%TESTAPP%.ear (
  	del /q %DOMAIN_HOME%\autodeploy\*.ear
         copy %PROJDIR%\%TESTAPP%.ear %DOMAIN_HOME%\autodeploy     
 )
